@@ -1,0 +1,16 @@
+[
+{
+  "modid": "${modid}",
+  "name": "MicroHUD",
+  "description": "MiniHUD-like mod but even smaller",
+  "version": "${version}",
+  "mcversion": "${minecraft_version}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["kimoVoid"],
+  "credits": "masa, for creating MiniHUD",
+  "logoFile": "assets/microhud/icon.png",
+  "screenshots": [],
+  "dependencies": []
+}
+]

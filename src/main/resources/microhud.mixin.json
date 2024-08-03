@@ -1,0 +1,16 @@
+{
+  "required": true,
+  "minVersion": "0.6",
+  "package": "me.kimovoid.microhud.mixin",
+  "refmap": "microhud.mixin.refmap.json",
+  "compatibilityLevel": "JAVA_8",
+  "client": [
+    "GuiIngameMixin",
+    "NetHandlerPlayClientMixin",
+    "access.MinecraftAccessor"
+  ],
+  "mixins": [
+    "access.SpawnerAnimalsAccessor",
+    "access.WorldServerAccessor"
+  ]
+}
