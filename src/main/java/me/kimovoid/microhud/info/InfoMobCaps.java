@@ -17,7 +17,7 @@ public class InfoMobCaps extends InfoLine {
 
         StringBuilder str = new StringBuilder();
         MobCapData mobCaps = MicroHUD.INSTANCE.mobCaps;
-        str.append(String.format("H: §c%s/%s", mobCaps.hostile, mobCaps.hostileMax));
+        str.append(String.format("Mob Caps: H: §c%s/%s", mobCaps.hostile, mobCaps.hostileMax));
 
         if (mobCaps.passive != -1) {
             str.append(String.format(" §rP: §a%s/%s", mobCaps.passive, mobCaps.passiveMax));
