@@ -12,8 +12,8 @@ public class Config {
     public final Configuration config;
 
     public boolean hudRendering = true;
-    public boolean effectsHudRendering = false;
-    public boolean effectsHudTime = false;
+    public boolean effectsHudRendering = true;
+    public boolean effectsHudTime = true;
     public float hudScale = 1.0f;
 
     public boolean hudBackground = true;
@@ -57,42 +57,42 @@ public class Config {
             config.load();
         }
 
-        this.hudRendering = config.getBoolean("hudRendering", Configuration.CATEGORY_GENERAL, this.hudRendering, "Enables the main HUD");
-        this.effectsHudRendering = config.getBoolean("effectsHudRendering", Configuration.CATEGORY_GENERAL, this.effectsHudRendering, "Enables effect status HUD");
-        this.effectsHudTime = config.getBoolean("effectsHudTime", Configuration.CATEGORY_GENERAL, this.effectsHudTime, "Whether to show potion effect times");
-        this.hudScale = config.getFloat("hudScale", Configuration.CATEGORY_GENERAL, this.hudScale, 0.0f, 10.0f, "HUD scale modifier");
+        this.hudRendering = config.getBoolean("hudRendering", Configuration.CATEGORY_GENERAL, true, "Enables the main HUD");
+        this.effectsHudRendering = config.getBoolean("effectsHudRendering", Configuration.CATEGORY_GENERAL, true, "Enables effect status HUD");
+        this.effectsHudTime = config.getBoolean("effectsHudTime", Configuration.CATEGORY_GENERAL, true, "Whether to show potion effect times");
+        this.hudScale = config.getFloat("hudScale", Configuration.CATEGORY_GENERAL, 1.0f, 0.0f, 10.0f, "HUD scale modifier");
 
-        this.hudBackground = config.getBoolean("hudBackground", "render", this.hudBackground, "Enables background rendering");
-        this.hudTextShadow = config.getBoolean("hudTextShadow", "render", this.hudTextShadow, "Enables text shadow rendering");
+        this.hudBackground = config.getBoolean("hudBackground", "render", true, "Enables background rendering");
+        this.hudTextShadow = config.getBoolean("hudTextShadow", "render", false, "Enables text shadow rendering");
 
-        this.infoFps = config.getBoolean("infoFps", "lines", this.infoFps, "Display your current FPS");
-        this.infoCurrentTime = config.getBoolean("infoCurrentTime", "lines", this.infoCurrentTime, "Display your computer's date and time");
-        this.infoBlockPos = config.getBoolean("infoBlockPos", "lines", this.infoBlockPos, "Display your block position");
-        this.infoFacing = config.getBoolean("infoFacing", "lines", this.infoFacing, "Display your direction");
-        this.infoPing = config.getBoolean("infoPing", "lines", this.infoPing, "Display your ping in servers");
-        this.infoTps = config.getBoolean("infoTps", "lines", this.infoTps, "Display TPS and MSPT");
-        this.infoSeed = config.getBoolean("infoSeed", "lines", this.infoSeed, "Display the world seed");
-        this.infoSlime = config.getBoolean("infoSlime", "lines", this.infoSlime, "Display slime chunks");
-        this.infoMobCaps = config.getBoolean("infoMobCaps", "lines", this.infoMobCaps, "Display mob caps");
-        this.infoWorldTime = config.getBoolean("infoWorldTime", "lines", this.infoWorldTime, "Display the world time and day");
-        this.infoLookingAtBlock = config.getBoolean("infoLookingAtBlock", "lines", this.infoLookingAtBlock, "Display the position of the block you're looking at");
-        this.infoChunkPos = config.getBoolean("infoChunkPos", "lines", this.infoChunkPos, "Display the sub-chunk position\nMerged with \"infoBlockPos\"");
-        this.infoRegionFile = config.getBoolean("infoRegionFile", "lines", this.infoRegionFile, "Display the region file name\nMerged with \"infoBlockPos\"");
-        this.infoLightLevel = config.getBoolean("infoLightLevel", "lines", this.infoLightLevel, "Display the block/sky light level");
+        this.infoFps = config.getBoolean("infoFps", "lines", true, "Display your current FPS");
+        this.infoCurrentTime = config.getBoolean("infoCurrentTime", "lines", true, "Display your computer's date and time");
+        this.infoBlockPos = config.getBoolean("infoBlockPos", "lines", true, "Display your block position");
+        this.infoFacing = config.getBoolean("infoFacing", "lines", true, "Display your direction");
+        this.infoPing = config.getBoolean("infoPing", "lines", false, "Display your ping in servers");
+        this.infoTps = config.getBoolean("infoTps", "lines", false, "Display TPS and MSPT");
+        this.infoSeed = config.getBoolean("infoSeed", "lines", false, "Display the world seed");
+        this.infoSlime = config.getBoolean("infoSlime", "lines", false, "Display slime chunks");
+        this.infoMobCaps = config.getBoolean("infoMobCaps", "lines", false, "Display mob caps");
+        this.infoWorldTime = config.getBoolean("infoWorldTime", "lines", false, "Display the world time and day");
+        this.infoLookingAtBlock = config.getBoolean("infoLookingAtBlock", "lines", false, "Display the position of the block you're looking at");
+        this.infoChunkPos = config.getBoolean("infoChunkPos", "lines", false, "Display the sub-chunk position\nMerged with \"infoBlockPos\"");
+        this.infoRegionFile = config.getBoolean("infoRegionFile", "lines", false, "Display the region file name\nMerged with \"infoBlockPos\"");
+        this.infoLightLevel = config.getBoolean("infoLightLevel", "lines", false, "Display the block/sky light level");
 
         String orderMsg = "Choose this line's priority";
-        this.lineOrderFps = config.getInt("lineOrderFps", "order", this.lineOrderFps, 0, 100, orderMsg);
-        this.lineOrderCurrentTime = config.getInt("lineOrderCurrentTime", "order", this.lineOrderCurrentTime, 0, 100, orderMsg);
-        this.lineOrderBlockPos = config.getInt("lineOrderBlockPos", "order", this.lineOrderBlockPos, 0, 100, orderMsg + "\nAlso used for infoChunkPos and infoRegionFile");
-        this.lineOrderFacing = config.getInt("lineOrderFacing", "order", this.lineOrderFacing, 0, 100, orderMsg);
-        this.lineOrderPing = config.getInt("lineOrderPing", "order", this.lineOrderPing, 0, 100, orderMsg);
-        this.lineOrderTps = config.getInt("lineOrderTps", "order", this.lineOrderTps, 0, 100, orderMsg);
-        this.lineOrderSeed = config.getInt("lineOrderSeed", "order", this.lineOrderSeed, 0, 100, orderMsg);
-        this.lineOrderSlime = config.getInt("lineOrderSlime", "order", this.lineOrderSlime, 0, 100, orderMsg);
-        this.lineOrderMobCaps = config.getInt("lineOrderMobCaps", "order", this.lineOrderMobCaps, 0, 100, orderMsg);
-        this.lineOrderWorldTime = config.getInt("lineOrderWorldTime", "order", this.lineOrderWorldTime, 0, 100, orderMsg);
-        this.lineOrderLookingAtBlock = config.getInt("lineOrderLookingAtBlock", "order", this.lineOrderLookingAtBlock, 0, 100, orderMsg);
-        this.lineOrderLightLevel = config.getInt("lineOrderLightLevel", "order", this.lineOrderLightLevel, 0, 100, orderMsg);
+        this.lineOrderFps = config.getInt("lineOrderFps", "order", 0, 0, 100, orderMsg);
+        this.lineOrderCurrentTime = config.getInt("lineOrderCurrentTime", "order", 1, 0, 100, orderMsg);
+        this.lineOrderBlockPos = config.getInt("lineOrderBlockPos", "order", 2, 0, 100, orderMsg + "\nAlso used for infoChunkPos and infoRegionFile");
+        this.lineOrderFacing = config.getInt("lineOrderFacing", "order", 3, 0, 100, orderMsg);
+        this.lineOrderPing = config.getInt("lineOrderPing", "order", 4, 0, 100, orderMsg);
+        this.lineOrderTps = config.getInt("lineOrderTps", "order", 5, 0, 100, orderMsg);
+        this.lineOrderSeed = config.getInt("lineOrderSeed", "order", 6, 0, 100, orderMsg);
+        this.lineOrderSlime = config.getInt("lineOrderSlime", "order", 7, 0, 100, orderMsg);
+        this.lineOrderMobCaps = config.getInt("lineOrderMobCaps", "order", 8, 0, 100, orderMsg);
+        this.lineOrderWorldTime = config.getInt("lineOrderWorldTime", "order", 9, 0, 100, orderMsg);
+        this.lineOrderLookingAtBlock = config.getInt("lineOrderLookingAtBlock", "order", 10, 0, 100, orderMsg);
+        this.lineOrderLightLevel = config.getInt("lineOrderLightLevel", "order", 11, 0, 100, orderMsg);
 
         this.loadLines();
 
