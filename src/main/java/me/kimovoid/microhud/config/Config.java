@@ -14,6 +14,7 @@ public class Config {
     public boolean hudRendering = true;
     public boolean effectsHudRendering = true;
     public boolean effectsHudTime = true;
+    public boolean tradingHudRendering = true;
     public float hudScale = 1.0f;
 
     public boolean hudBackground = true;
@@ -61,6 +62,7 @@ public class Config {
         this.effectsHudRendering = config.getBoolean("effectsHudRendering", Configuration.CATEGORY_GENERAL, true, "Enables effect status HUD");
         this.effectsHudTime = config.getBoolean("effectsHudTime", Configuration.CATEGORY_GENERAL, true, "Whether to show potion effect times");
         this.hudScale = config.getFloat("hudScale", Configuration.CATEGORY_GENERAL, 1.0f, 0.0f, 10.0f, "HUD scale modifier");
+        this.tradingHudRendering = config.getBoolean("tradingHudRendering", Configuration.CATEGORY_GENERAL, true, "Enables enhanced trading GUI\nSimilar to 1.14+");
 
         this.hudBackground = config.getBoolean("hudBackground", "render", true, "Enables background rendering");
         this.hudTextShadow = config.getBoolean("hudTextShadow", "render", false, "Enables text shadow rendering");
