@@ -80,6 +80,18 @@ public abstract class GuiMerchantMixin extends GuiContainer {
             if (this.field_147041_z != index) {
                 this.microhud_syncGuiIndex(index);
             }
+
+            /* Swap/fill slots */
+            MerchantRecipe trade = (MerchantRecipe) this.field_147037_w.getRecipes(this.mc.thePlayer).get(index);
+            ItemStack item1 = trade.getItemToBuy();
+            ItemStack item2 = trade.getSecondItemToBuy();
+
+            this.microhud_emptySlot(0, item1);
+            this.microhud_emptySlot(1, item2);
+            this.microhud_fillSlotWith(0, item1);
+            if (item2 != null) {
+                this.microhud_fillSlotWith(1, item2);
+            }
         }
     }
 
@@ -325,6 +337,32 @@ public abstract class GuiMerchantMixin extends GuiContainer {
             }
             this.buttonList.add(microhud_tradeButtons[l] = new GuiTradeButton(3 + l, x, y, l));
             y += 20;
+        }
+    }
+
+    @Unique
+    public void microhud_fillSlotWith(int slot, ItemStack item) {
+        ItemStack currentItem = this.inventorySlots.getSlot(slot).getStack();
+        int stackSize = item.getMaxStackSize();
+        int currentSize = currentItem != null ? currentItem.stackSize : 0;
+        for (int i = 3; i < 39; i++) {
+            if (currentSize >= stackSize) return;
+            ItemStack is = this.inventorySlots.getSlot(i).getStack();
+            if (is == null || !is.getItem().equals(item.getItem())) continue;
+            currentSize += is.stackSize;
+
+            /* Swap item, simulating left click instead of key swap */
+            this.mc.playerController.windowClick(this.inventorySlots.windowId, i, 0, 0, this.mc.thePlayer);
+            this.mc.playerController.windowClick(this.inventorySlots.windowId, slot, 0, 0, this.mc.thePlayer);
+            this.mc.playerController.windowClick(this.inventorySlots.windowId, i, 0, 0, this.mc.thePlayer);
+        }
+    }
+
+    @Unique
+    public void microhud_emptySlot(int slot, ItemStack item) {
+        ItemStack previousItem = this.inventorySlots.getSlot(slot).getStack();
+        if (item == null || (previousItem != null && !previousItem.getItem().equals(item.getItem()))) {
+            this.mc.playerController.windowClick(this.inventorySlots.windowId, slot, 0, 1, this.mc.thePlayer);
         }
     }
 }
