@@ -34,6 +34,9 @@ public class Config {
     public boolean infoChunkPos = false;
     public boolean infoRegionFile = false;
     public boolean infoLightLevel = false;
+    public boolean infoEntities = false;
+    public boolean infoSpeed = false;
+    public boolean infoBiome = false;
 
     public int lineOrderFps = 0;
     public int lineOrderCurrentTime = 1;
@@ -47,6 +50,9 @@ public class Config {
     public int lineOrderWorldTime = 9;
     public int lineOrderLookingAtBlock = 10;
     public int lineOrderLightLevel = 11;
+    public int lineOrderEntities = 12;
+    public int lineOrderSpeed = 13;
+    public int lineOrderBiome = 14;
 
     public Config(File path) {
         config = new Configuration(path);
@@ -81,6 +87,9 @@ public class Config {
         this.infoChunkPos = config.getBoolean("infoChunkPos", "lines", false, "Display the sub-chunk position\nMerged with \"infoBlockPos\"");
         this.infoRegionFile = config.getBoolean("infoRegionFile", "lines", false, "Display the region file name\nMerged with \"infoBlockPos\"");
         this.infoLightLevel = config.getBoolean("infoLightLevel", "lines", false, "Display the block/sky light level");
+        this.infoEntities = config.getBoolean("infoEntities", "lines", false, "Display rendered/total entities");
+        this.infoSpeed = config.getBoolean("infoSpeed", "lines", false, "Display current movement speed");
+        this.infoBiome = config.getBoolean("infoBiome", "lines", false, "Display biome name");
 
         String orderMsg = "Choose this line's priority";
         this.lineOrderFps = config.getInt("lineOrderFps", "order", 0, 0, 100, orderMsg);
@@ -95,6 +104,9 @@ public class Config {
         this.lineOrderWorldTime = config.getInt("lineOrderWorldTime", "order", 9, 0, 100, orderMsg);
         this.lineOrderLookingAtBlock = config.getInt("lineOrderLookingAtBlock", "order", 10, 0, 100, orderMsg);
         this.lineOrderLightLevel = config.getInt("lineOrderLightLevel", "order", 11, 0, 100, orderMsg);
+        this.lineOrderEntities = config.getInt("lineOrderEntities", "order", 12, 0, 100, orderMsg);
+        this.lineOrderSpeed = config.getInt("lineOrderSpeed", "order", 13, 0, 100, orderMsg);
+        this.lineOrderBiome = config.getInt("lineOrderBiome", "order", 14, 0, 100, orderMsg);
 
         this.loadLines();
 
@@ -118,6 +130,9 @@ public class Config {
         if (this.infoWorldTime) MicroHUD.INSTANCE.lines.add(new InfoWorldTime(this.lineOrderWorldTime));
         if (this.infoLookingAtBlock) MicroHUD.INSTANCE.lines.add(new InfoLookingAtBlock(this.lineOrderLookingAtBlock));
         if (this.infoLightLevel) MicroHUD.INSTANCE.lines.add(new InfoLightLevel(this.lineOrderLightLevel));
+        if (this.infoEntities) MicroHUD.INSTANCE.lines.add(new InfoEntities(this.lineOrderEntities));
+        if (this.infoSpeed) MicroHUD.INSTANCE.lines.add(new InfoSpeed(this.lineOrderSpeed));
+        if (this.infoBiome) MicroHUD.INSTANCE.lines.add(new InfoBiome(this.lineOrderBiome));
 
         /* Order the list based on order */
         MicroHUD.INSTANCE.lines.sort(Comparator.comparing(InfoLine::getOrder));

@@ -1,6 +1,7 @@
 package me.kimovoid.microhud.info;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.util.MathHelper;
 
 public class InfoLine {
 
@@ -21,5 +22,18 @@ public class InfoLine {
 
     public String getLineString() {
         return "";
+    }
+
+    /* Helpers */
+    int getX() {
+        return MathHelper.floor_double(this.mc.thePlayer.posX);
+    }
+
+    int getY() {
+        return MathHelper.floor_double(this.mc.thePlayer.posY);
+    }
+
+    int getZ() {
+        return MathHelper.floor_double(this.mc.thePlayer.posZ);
     }
 }
