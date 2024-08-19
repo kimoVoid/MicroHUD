@@ -26,6 +26,7 @@ public class MicroHUD {
     public static Logger LOGGER;
     public static final String MODID = "microhud";
     public static final String VERSION = "@VERSION@";
+    public static final String CHANNEL = "MicroHUD";
     public static MicroHUD INSTANCE;
     public static Config CONFIG;
 

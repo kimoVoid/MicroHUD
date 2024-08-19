@@ -2,6 +2,9 @@ package me.kimovoid.microhud.config;
 
 import me.kimovoid.microhud.MicroHUD;
 import me.kimovoid.microhud.info.*;
+import me.kimovoid.microhud.networking.OSLHandshakePayload;
+import net.minecraft.client.Minecraft;
+import net.minecraft.network.play.client.C17PacketCustomPayload;
 import net.minecraftforge.common.config.Configuration;
 
 import java.io.File;
@@ -11,15 +14,18 @@ public class Config {
 
     public final Configuration config;
 
+    /* General settings */
     public boolean hudRendering = true;
     public boolean effectsHudRendering = true;
     public boolean effectsHudTime = true;
     public boolean tradingHudRendering = true;
     public float hudScale = 1.0f;
 
+    /* Render settings */
     public boolean hudBackground = true;
     public boolean hudTextShadow = false;
 
+    /* Info line toggles */
     public boolean infoFps = true;
     public boolean infoCurrentTime = true;
     public boolean infoBlockPos = true;
@@ -38,6 +44,7 @@ public class Config {
     public boolean infoSpeed = false;
     public boolean infoBiome = false;
 
+    /* Info line order */
     public int lineOrderFps = 0;
     public int lineOrderCurrentTime = 1;
     public int lineOrderBlockPos = 2;
@@ -53,6 +60,10 @@ public class Config {
     public int lineOrderEntities = 12;
     public int lineOrderSpeed = 13;
     public int lineOrderBiome = 14;
+
+    /* Player list toggles */
+    public boolean playerListTps = false;
+    public boolean playerListMobcaps = false;
 
     public Config(File path) {
         config = new Configuration(path);
@@ -108,14 +119,17 @@ public class Config {
         this.lineOrderSpeed = config.getInt("lineOrderSpeed", "order", 13, 0, 100, orderMsg);
         this.lineOrderBiome = config.getInt("lineOrderBiome", "order", 14, 0, 100, orderMsg);
 
-        this.loadLines();
+        this.playerListTps = config.getBoolean("playerListTps", "playerlist", false, "Display TPS and MSPT in tab list");
+        this.playerListMobcaps = config.getBoolean("playerListMobcaps", "playerlist", false, "Display mob caps in tab list");
+
+        this.loadLines(load);
 
         if (config.hasChanged()) {
             config.save();
         }
     }
 
-    public void loadLines() {
+    public void loadLines(boolean load) {
         MicroHUD.INSTANCE.lines.clear();
 
         if (this.infoFps) MicroHUD.INSTANCE.lines.add(new InfoFps(this.lineOrderFps));
@@ -134,7 +148,16 @@ public class Config {
         if (this.infoSpeed) MicroHUD.INSTANCE.lines.add(new InfoSpeed(this.lineOrderSpeed));
         if (this.infoBiome) MicroHUD.INSTANCE.lines.add(new InfoBiome(this.lineOrderBiome));
 
-        /* Order the list based on order */
+        /* Order the list based on custom order */
         MicroHUD.INSTANCE.lines.sort(Comparator.comparing(InfoLine::getOrder));
+
+        /* Register networking listeners */
+        if (!load) {
+            Minecraft mc = Minecraft.getMinecraft();
+            C17PacketCustomPayload packet = OSLHandshakePayload.getHandshake();
+            if (packet != null && mc.theWorld != null && mc.theWorld.isRemote) {
+                mc.getNetHandler().getNetworkManager().scheduleOutboundPacket(packet);
+            }
+        }
     }
 }

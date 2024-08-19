@@ -5,10 +5,11 @@
   "refmap": "microhud.mixin.refmap.json",
   "compatibilityLevel": "JAVA_8",
   "client": [
-    "GuiIngameMixin",
-    "NetHandlerPlayClientMixin",
     "access.MinecraftAccessor",
     "access.RenderGlobalAccessor",
+    "hud.GuiIngameMixin",
+    "networking.NetHandlerPlayClientMixin",
+    "playerlist.GuiIngameMixin",
     "villagergui.GuiMerchantMixin"
   ],
   "mixins": [

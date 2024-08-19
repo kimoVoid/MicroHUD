@@ -1,4 +1,4 @@
-package me.kimovoid.microhud.mixin;
+package me.kimovoid.microhud.mixin.hud;
 
 import me.kimovoid.microhud.MicroHUD;
 import me.kimovoid.microhud.info.InfoLine;

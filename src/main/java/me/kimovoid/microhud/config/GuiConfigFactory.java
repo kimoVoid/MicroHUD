@@ -57,6 +57,10 @@ public class GuiConfigFactory implements IModGuiFactory {
             renderCategory.setComment("Change the look of the HUD");
             elements.add(new ConfigElement(renderCategory));
 
+            ConfigCategory tabCategory = configuration.getCategory("playerlist").setLanguageKey("microhud.config.playerlist");
+            tabCategory.setComment("Display info in the player list");
+            elements.add(new ConfigElement(tabCategory));
+
             return elements;
         }
     }

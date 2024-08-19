@@ -10,13 +10,19 @@ public class InfoTPS extends InfoLine {
     }
 
     @Override
-    public String getLineString() {
-        if (MicroHUD.INSTANCE.tps.tps == -1) {
-            return "Server TPS: §7(no data)";
-        }
+    public boolean canRender() {
+        return MicroHUD.INSTANCE.tps.tps != -1;
+    }
 
+    @Override
+    public String getLineString() {
+        return String.format("Server %s", getTPS());
+    }
+
+    /* Will be used for tab list soon(tm) */
+    public static String getTPS() {
         TPSData tpsData = MicroHUD.INSTANCE.tps;
-        return String.format("Server TPS: %s%s §r(MSPT: %s%s§r)",
+        return String.format("TPS: %s%s §r(MSPT: %s%s§r)",
                 tpsData.getTPSColor(), tpsData.tps, tpsData.getMSPTColor(), tpsData.mspt);
     }
 }

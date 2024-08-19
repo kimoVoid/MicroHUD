@@ -1,4 +1,4 @@
-package me.kimovoid.microhud.mixin;
+package me.kimovoid.microhud.mixin.networking;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
@@ -22,14 +22,18 @@ public class NetHandlerPlayClientMixin {
 
     @Shadow @Final private NetworkManager netManager;
 
+    /* Handle custom packets */
     @Inject(method = "handleCustomPayload", at = @At("HEAD"))
     private void handleTPSPacket(S3FPacketCustomPayload packet, CallbackInfo ci) {
         if (packet == null || packet.func_149169_c() == null) {
             return;
         }
 
-        if (packet.func_149169_c().equals("MicroHUD|TPS")) {
-            if (!MicroHUD.CONFIG.infoTps) return;
+        if (packet.func_149169_c().equals(MicroHUD.CHANNEL + "|TPS")) {
+            if (!MicroHUD.CONFIG.infoTps && !MicroHUD.CONFIG.playerListTps) {
+                return;
+            }
+
             ByteBuf bytebuf = Unpooled.wrappedBuffer(packet.func_149168_d());
             try {
                 double tps = bytebuf.readDouble();
@@ -39,9 +43,11 @@ public class NetHandlerPlayClientMixin {
             } catch (Exception ignored) {}
         }
 
-        if (packet.func_149169_c().equals("MicroHUD|MobCaps")) {
-            if (!MicroHUD.CONFIG.infoMobCaps) return;
-            MicroHUD.LOGGER.info("received mobcaps");
+        if (packet.func_149169_c().equals(MicroHUD.CHANNEL + "|MobCaps")) {
+            if (!MicroHUD.CONFIG.infoMobCaps && !MicroHUD.CONFIG.playerListMobcaps) {
+                return;
+            }
+
             ByteBuf bytebuf = Unpooled.wrappedBuffer(packet.func_149168_d());
             try {
                 MicroHUD.INSTANCE.mobCaps.hostile = bytebuf.readInt();
@@ -56,6 +62,7 @@ public class NetHandlerPlayClientMixin {
         }
     }
 
+    /* Grab own player ping on remote servers */
     @Inject(method = "handlePlayerListItem", at = @At("HEAD"))
     private void getPing(S38PacketPlayerListItem packet, CallbackInfo ci) {
         if (packet == null || packet.func_149122_c() == null) {
@@ -66,9 +73,12 @@ public class NetHandlerPlayClientMixin {
         }
     }
 
+    /* Register OSL networking channels */
     @Inject(method = "handleJoinGame", at = @At("TAIL"))
     private void sendHandshake(CallbackInfo ci) {
         C17PacketCustomPayload packet = OSLHandshakePayload.getHandshake();
-        if (packet != null) this.netManager.scheduleOutboundPacket(packet);
+        if (packet != null) {
+            this.netManager.scheduleOutboundPacket(packet);
+        }
     }
 }

@@ -10,14 +10,20 @@ public class InfoMobCaps extends InfoLine {
     }
 
     @Override
-    public String getLineString() {
-        if (MicroHUD.INSTANCE.mobCaps.isEmpty()) {
-            return "Mob Caps: §7(no data)";
-        }
+    public boolean canRender() {
+        return !MicroHUD.INSTANCE.mobCaps.isEmpty();
+    }
 
+    @Override
+    public String getLineString() {
+        return String.format("Mob Caps: %s", getMobCaps());
+    }
+
+    /* Will be used for tab list soon(tm) */
+    public static String getMobCaps() {
         StringBuilder str = new StringBuilder();
         MobCapData mobCaps = MicroHUD.INSTANCE.mobCaps;
-        str.append(String.format("Mob Caps: H: §c%s/%s", mobCaps.hostile, mobCaps.hostileMax));
+        str.append(String.format("H: §c%s/%s", mobCaps.hostile, mobCaps.hostileMax));
 
         if (mobCaps.passive != -1) {
             str.append(String.format(" §rP: §a%s/%s", mobCaps.passive, mobCaps.passiveMax));
