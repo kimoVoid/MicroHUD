@@ -17,7 +17,6 @@ import net.minecraft.network.play.client.C17PacketCustomPayload;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.village.MerchantRecipe;
 import net.minecraft.village.MerchantRecipeList;
-import org.apache.logging.log4j.Logger;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 import org.spongepowered.asm.mixin.*;
@@ -28,7 +27,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class GuiMerchantMixin extends GuiContainer {
 
     @Shadow private IMerchant field_147037_w;
-    @Shadow @Final private static Logger logger;
     @Shadow private int field_147041_z;
 
     @Unique private boolean microhud_hasRecipes = false;
@@ -314,7 +312,7 @@ public abstract class GuiMerchantMixin extends GuiContainer {
             bytebuf.writeInt(index);
             this.mc.getNetHandler().addToSendQueue(new C17PacketCustomPayload("MC|TrSel", bytebuf));
         } catch (Exception exception) {
-            logger.error("Couldn't send trade info", exception);
+            MicroHUD.LOGGER.error("Couldn't send trade info", exception);
         } finally {
             bytebuf.release();
         }
