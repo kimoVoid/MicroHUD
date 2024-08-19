@@ -11,7 +11,7 @@ public class InfoCurrentTime extends InfoLine {
 
     @Override
     public String getLineString() {
-        SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss");
+        SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return date.format(new Date(System.currentTimeMillis()));
     }
 }
