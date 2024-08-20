@@ -43,6 +43,8 @@ public class Config {
     public boolean infoEntities = false;
     public boolean infoSpeed = false;
     public boolean infoBiome = false;
+    public boolean infoMemory = false;
+    public boolean infoServerMemory = false;
 
     /* Info line order */
     public int lineOrderFps = 0;
@@ -60,10 +62,14 @@ public class Config {
     public int lineOrderEntities = 12;
     public int lineOrderSpeed = 13;
     public int lineOrderBiome = 14;
+    public int lineOrderMemory = 15;
+    public int lineOrderServerMemory = 16;
 
     /* Player list toggles */
     public boolean playerListTps = false;
     public boolean playerListMobcaps = false;
+    public boolean playerListMemory = false;
+    public boolean playerListServerMemory = false;
 
     public Config(File path) {
         config = new Configuration(path);
@@ -101,6 +107,8 @@ public class Config {
         this.infoEntities = config.getBoolean("infoEntities", "lines", false, "Display rendered/total entities");
         this.infoSpeed = config.getBoolean("infoSpeed", "lines", false, "Display current movement speed");
         this.infoBiome = config.getBoolean("infoBiome", "lines", false, "Display biome name");
+        this.infoMemory = config.getBoolean("infoMemory", "lines", false, "Display used/allocated and max memory");
+        this.infoServerMemory = config.getBoolean("infoServerMemory", "lines", false, "Display server used/allocated and max memory");
 
         String orderMsg = "Choose this line's priority";
         this.lineOrderFps = config.getInt("lineOrderFps", "order", 0, 0, 100, orderMsg);
@@ -118,9 +126,13 @@ public class Config {
         this.lineOrderEntities = config.getInt("lineOrderEntities", "order", 12, 0, 100, orderMsg);
         this.lineOrderSpeed = config.getInt("lineOrderSpeed", "order", 13, 0, 100, orderMsg);
         this.lineOrderBiome = config.getInt("lineOrderBiome", "order", 14, 0, 100, orderMsg);
+        this.lineOrderMemory = config.getInt("lineOrderMemory", "order", 15, 0, 100, orderMsg);
+        this.lineOrderServerMemory = config.getInt("lineOrderServerMemory", "order", 16, 0, 100, orderMsg);
 
         this.playerListTps = config.getBoolean("playerListTps", "playerlist", false, "Display TPS and MSPT in tab list");
         this.playerListMobcaps = config.getBoolean("playerListMobcaps", "playerlist", false, "Display mob caps in tab list");
+        this.playerListMemory = config.getBoolean("playerListMemory", "playerlist", false, "Display used/allocated and max memory in tab list");
+        this.playerListServerMemory = config.getBoolean("playerListServerMemory", "playerlist", false, "Display server used/allocated and max memory in tab list");
 
         this.loadLines(load);
 
@@ -147,6 +159,8 @@ public class Config {
         if (this.infoEntities) MicroHUD.INSTANCE.lines.add(new InfoEntities(this.lineOrderEntities));
         if (this.infoSpeed) MicroHUD.INSTANCE.lines.add(new InfoSpeed(this.lineOrderSpeed));
         if (this.infoBiome) MicroHUD.INSTANCE.lines.add(new InfoBiome(this.lineOrderBiome));
+        if (this.infoMemory) MicroHUD.INSTANCE.lines.add(new InfoMemory(this.lineOrderMemory, false));
+        if (this.infoServerMemory) MicroHUD.INSTANCE.lines.add(new InfoMemory(this.lineOrderServerMemory, true));
 
         /* Order the list based on custom order */
         MicroHUD.INSTANCE.lines.sort(Comparator.comparing(InfoLine::getOrder));

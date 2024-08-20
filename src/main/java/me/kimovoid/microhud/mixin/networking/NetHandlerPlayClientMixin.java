@@ -63,6 +63,19 @@ public class NetHandlerPlayClientMixin {
                 DataMobCaps.INSTANCE.ambientMax = bytebuf.readInt();
             } catch (Exception ignored) {}
         }
+
+        if (packet.func_149169_c().equals(MicroHUD.CHANNEL + "|Mem")) {
+            if (!MicroHUD.CONFIG.infoServerMemory && !MicroHUD.CONFIG.playerListServerMemory) {
+                return;
+            }
+
+            ByteBuf bytebuf = Unpooled.wrappedBuffer(packet.func_149168_d());
+            try {
+                DataStorage.INSTANCE.serverMemUsed = bytebuf.readInt();
+                DataStorage.INSTANCE.serverMemAllocated = bytebuf.readInt();
+                DataStorage.INSTANCE.serverMemMax = bytebuf.readInt();
+            } catch (Exception ignored) {}
+        }
     }
 
     /* Grab own player ping on remote servers */

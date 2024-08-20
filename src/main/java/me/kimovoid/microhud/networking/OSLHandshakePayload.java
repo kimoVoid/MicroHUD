@@ -17,6 +17,7 @@ public class OSLHandshakePayload {
         List<String> channels = new ArrayList<>();
         if (MicroHUD.CONFIG.infoTps || MicroHUD.CONFIG.playerListTps) channels.add(MicroHUD.CHANNEL + "|TPS");
         if (MicroHUD.CONFIG.infoMobCaps || MicroHUD.CONFIG.playerListMobcaps) channels.add(MicroHUD.CHANNEL + "|MobCaps");
+        if (MicroHUD.CONFIG.infoServerMemory || MicroHUD.CONFIG.playerListServerMemory) channels.add(MicroHUD.CHANNEL + "|Mem");
         if (channels.isEmpty()) return null;
 
         bytebuf.writeInt(channels.size());

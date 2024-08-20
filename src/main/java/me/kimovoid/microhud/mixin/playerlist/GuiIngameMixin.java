@@ -2,16 +2,20 @@ package me.kimovoid.microhud.mixin.playerlist;
 
 import me.kimovoid.microhud.MicroHUD;
 import me.kimovoid.microhud.data.DataMobCaps;
+import me.kimovoid.microhud.data.DataStorage;
 import me.kimovoid.microhud.data.DataTPS;
+import me.kimovoid.microhud.info.InfoMemory;
 import me.kimovoid.microhud.info.InfoMobCaps;
 import me.kimovoid.microhud.info.InfoTPS;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiIngame;
 import net.minecraft.client.network.NetHandlerPlayClient;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.client.GuiIngameForge;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -38,14 +42,7 @@ public abstract class GuiIngameMixin extends GuiIngame {
     )
     private void addPlayerListLines(int width, int height, CallbackInfo ci) {
         NetHandlerPlayClient handler = mc.thePlayer.sendQueue;
-        List<String> tabLines = new ArrayList<>();
-
-        if (MicroHUD.CONFIG.playerListTps && DataTPS.INSTANCE.tps != -1) {
-            tabLines.add(InfoTPS.getTPS());
-        }
-        if (MicroHUD.CONFIG.playerListMobcaps && !DataMobCaps.INSTANCE.isEmpty()) {
-            tabLines.add(InfoMobCaps.getMobCaps());
-        }
+        List<String> tabLines = microhud_getPlayerListLines();
 
         if (tabLines.isEmpty()) {
             return;
@@ -67,5 +64,25 @@ public abstract class GuiIngameMixin extends GuiIngame {
             fontrenderer.drawStringWithShadow(tabLine, width / 2 - fontrenderer.getStringWidth(tabLine) / 2, tabSize + shift, 16777215);
             shift += 9;
         }
+    }
+
+    @Unique
+    private List<String> microhud_getPlayerListLines() {
+        List<String> tabLines = new ArrayList<>();
+
+        if (MicroHUD.CONFIG.playerListTps && DataTPS.INSTANCE.tps != -1) {
+            tabLines.add(InfoTPS.getTPS());
+        }
+        if (MicroHUD.CONFIG.playerListMobcaps && !DataMobCaps.INSTANCE.isEmpty()) {
+            tabLines.add(InfoMobCaps.getMobCaps());
+        }
+        if (MicroHUD.CONFIG.playerListMemory) {
+            tabLines.add(String.format("%sClient Mem: %s", EnumChatFormatting.GRAY, InfoMemory.getMemory()));
+        }
+        if (MicroHUD.CONFIG.playerListServerMemory && DataStorage.INSTANCE.serverMemUsed != -1) {
+            tabLines.add(String.format("%sServer Mem: %s", EnumChatFormatting.GRAY, InfoMemory.getServerMemory()));
+        }
+
+        return tabLines;
     }
 }
