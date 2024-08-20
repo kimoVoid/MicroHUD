@@ -1,6 +1,6 @@
 package me.kimovoid.microhud.info;
 
-import me.kimovoid.microhud.MicroHUD;
+import me.kimovoid.microhud.data.DataStorage;
 
 import java.util.Random;
 
@@ -12,7 +12,7 @@ public class InfoSlime extends InfoLine {
 
     @Override
     public String getLineString() {
-        boolean slime = this.isSlimeChunk(MicroHUD.INSTANCE.seed, this.mc.thePlayer.chunkCoordX, this.mc.thePlayer.chunkCoordZ);
+        boolean slime = this.isSlimeChunk(DataStorage.INSTANCE.seed, this.mc.thePlayer.chunkCoordX, this.mc.thePlayer.chunkCoordZ);
         return String.format("Slime: %s", (slime ? "§a" : "§c") + slime);
     }
 

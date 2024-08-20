@@ -7,7 +7,9 @@ import net.minecraft.util.MathHelper;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-public class TPSData {
+public class DataTPS {
+
+    public static final DataTPS INSTANCE = new DataTPS();
 
     public double tps = -1;
     public double mspt = -1;
@@ -37,5 +39,10 @@ public class TPSData {
 
     public String getMSPTColor() {
         return (this.mspt < 40) ? "§a" : (this.mspt < 45) ? "§e" : (this.mspt < 50) ? "§6" : "§c";
+    }
+
+    public void resetTPS() {
+        this.tps = -1;
+        this.mspt = -1;
     }
 }

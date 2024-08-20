@@ -1,6 +1,6 @@
 package me.kimovoid.microhud.info;
 
-import me.kimovoid.microhud.MicroHUD;
+import me.kimovoid.microhud.data.DataStorage;
 
 public class InfoPing extends InfoLine {
 
@@ -15,6 +15,6 @@ public class InfoPing extends InfoLine {
 
     @Override
     public String getLineString() {
-        return String.format("Ping: %s ms", MicroHUD.INSTANCE.ping);
+        return String.format("Ping: %s ms", DataStorage.INSTANCE.ping);
     }
 }

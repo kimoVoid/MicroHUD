@@ -1,7 +1,6 @@
 package me.kimovoid.microhud.info;
 
-import me.kimovoid.microhud.MicroHUD;
-import me.kimovoid.microhud.data.MobCapData;
+import me.kimovoid.microhud.data.DataMobCaps;
 
 public class InfoMobCaps extends InfoLine {
 
@@ -11,7 +10,7 @@ public class InfoMobCaps extends InfoLine {
 
     @Override
     public boolean canRender() {
-        return !MicroHUD.INSTANCE.mobCaps.isEmpty();
+        return !DataMobCaps.INSTANCE.isEmpty();
     }
 
     @Override
@@ -22,7 +21,7 @@ public class InfoMobCaps extends InfoLine {
     /* Will be used for tab list soon(tm) */
     public static String getMobCaps() {
         StringBuilder str = new StringBuilder();
-        MobCapData mobCaps = MicroHUD.INSTANCE.mobCaps;
+        DataMobCaps mobCaps = DataMobCaps.INSTANCE;
         str.append(String.format("H: §c%s/%s", mobCaps.hostile, mobCaps.hostileMax));
 
         if (mobCaps.passive != -1) {

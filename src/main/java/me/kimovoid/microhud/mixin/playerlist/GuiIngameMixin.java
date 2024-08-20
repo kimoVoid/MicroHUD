@@ -1,6 +1,8 @@
 package me.kimovoid.microhud.mixin.playerlist;
 
 import me.kimovoid.microhud.MicroHUD;
+import me.kimovoid.microhud.data.DataMobCaps;
+import me.kimovoid.microhud.data.DataTPS;
 import me.kimovoid.microhud.info.InfoMobCaps;
 import me.kimovoid.microhud.info.InfoTPS;
 import net.minecraft.client.Minecraft;
@@ -38,10 +40,10 @@ public abstract class GuiIngameMixin extends GuiIngame {
         NetHandlerPlayClient handler = mc.thePlayer.sendQueue;
         List<String> tabLines = new ArrayList<>();
 
-        if (MicroHUD.CONFIG.playerListTps && MicroHUD.INSTANCE.tps.tps != -1) {
+        if (MicroHUD.CONFIG.playerListTps && DataTPS.INSTANCE.tps != -1) {
             tabLines.add(InfoTPS.getTPS());
         }
-        if (MicroHUD.CONFIG.playerListMobcaps && !MicroHUD.INSTANCE.mobCaps.isEmpty()) {
+        if (MicroHUD.CONFIG.playerListMobcaps && !DataMobCaps.INSTANCE.isEmpty()) {
             tabLines.add(InfoMobCaps.getMobCaps());
         }
 

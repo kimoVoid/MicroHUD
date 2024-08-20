@@ -3,6 +3,9 @@ package me.kimovoid.microhud.mixin.networking;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import me.kimovoid.microhud.MicroHUD;
+import me.kimovoid.microhud.data.DataMobCaps;
+import me.kimovoid.microhud.data.DataStorage;
+import me.kimovoid.microhud.data.DataTPS;
 import me.kimovoid.microhud.networking.OSLHandshakePayload;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.network.NetHandlerPlayClient;
@@ -38,8 +41,8 @@ public class NetHandlerPlayClientMixin {
             try {
                 double tps = bytebuf.readDouble();
                 double mspt = bytebuf.readDouble();
-                MicroHUD.INSTANCE.tps.tps = tps;
-                MicroHUD.INSTANCE.tps.mspt = mspt;
+                DataTPS.INSTANCE.tps = tps;
+                DataTPS.INSTANCE.mspt = mspt;
             } catch (Exception ignored) {}
         }
 
@@ -50,14 +53,14 @@ public class NetHandlerPlayClientMixin {
 
             ByteBuf bytebuf = Unpooled.wrappedBuffer(packet.func_149168_d());
             try {
-                MicroHUD.INSTANCE.mobCaps.hostile = bytebuf.readInt();
-                MicroHUD.INSTANCE.mobCaps.hostileMax = bytebuf.readInt();
-                MicroHUD.INSTANCE.mobCaps.passive = bytebuf.readInt();
-                MicroHUD.INSTANCE.mobCaps.passiveMax = bytebuf.readInt();
-                MicroHUD.INSTANCE.mobCaps.water = bytebuf.readInt();
-                MicroHUD.INSTANCE.mobCaps.waterMax = bytebuf.readInt();
-                MicroHUD.INSTANCE.mobCaps.ambient = bytebuf.readInt();
-                MicroHUD.INSTANCE.mobCaps.ambientMax = bytebuf.readInt();
+                DataMobCaps.INSTANCE.hostile = bytebuf.readInt();
+                DataMobCaps.INSTANCE.hostileMax = bytebuf.readInt();
+                DataMobCaps.INSTANCE.passive = bytebuf.readInt();
+                DataMobCaps.INSTANCE.passiveMax = bytebuf.readInt();
+                DataMobCaps.INSTANCE.water = bytebuf.readInt();
+                DataMobCaps.INSTANCE.waterMax = bytebuf.readInt();
+                DataMobCaps.INSTANCE.ambient = bytebuf.readInt();
+                DataMobCaps.INSTANCE.ambientMax = bytebuf.readInt();
             } catch (Exception ignored) {}
         }
     }
@@ -69,7 +72,7 @@ public class NetHandlerPlayClientMixin {
             return;
         }
         if (packet.func_149122_c().equals(Minecraft.getMinecraft().thePlayer.getDisplayName())) {
-            MicroHUD.INSTANCE.ping = packet.func_149120_e();
+            DataStorage.INSTANCE.ping = packet.func_149120_e();
         }
     }
 

@@ -1,7 +1,6 @@
 package me.kimovoid.microhud.info;
 
-import me.kimovoid.microhud.MicroHUD;
-import me.kimovoid.microhud.data.TPSData;
+import me.kimovoid.microhud.data.DataTPS;
 
 public class InfoTPS extends InfoLine {
 
@@ -11,7 +10,7 @@ public class InfoTPS extends InfoLine {
 
     @Override
     public boolean canRender() {
-        return MicroHUD.INSTANCE.tps.tps != -1;
+        return DataTPS.INSTANCE.tps != -1;
     }
 
     @Override
@@ -19,10 +18,8 @@ public class InfoTPS extends InfoLine {
         return String.format("Server %s", getTPS());
     }
 
-    /* Will be used for tab list soon(tm) */
     public static String getTPS() {
-        TPSData tpsData = MicroHUD.INSTANCE.tps;
         return String.format("TPS: %s%s §r(MSPT: %s%s§r)",
-                tpsData.getTPSColor(), tpsData.tps, tpsData.getMSPTColor(), tpsData.mspt);
+                DataTPS.INSTANCE.getTPSColor(), DataTPS.INSTANCE.tps, DataTPS.INSTANCE.getMSPTColor(), DataTPS.INSTANCE.mspt);
     }
 }

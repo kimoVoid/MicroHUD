@@ -8,7 +8,9 @@ import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.world.SpawnerAnimals;
 import net.minecraft.world.WorldServer;
 
-public class MobCapData {
+public class DataMobCaps {
+
+    public static final DataMobCaps INSTANCE = new DataMobCaps();
 
     public int hostile = -1;
     public int hostileMax = -1;

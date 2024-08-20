@@ -2,7 +2,8 @@ package me.kimovoid.microhud.listener;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.TickEvent;
-import me.kimovoid.microhud.MicroHUD;
+import me.kimovoid.microhud.data.DataMobCaps;
+import me.kimovoid.microhud.data.DataTPS;
 import net.minecraft.client.Minecraft;
 
 public class TickListener {
@@ -15,8 +16,8 @@ public class TickListener {
             this.tpsTimer = 20;
             if (Minecraft.getMinecraft().isSingleplayer()) {
                 try {
-                    MicroHUD.INSTANCE.tps.getClientTPS();
-                    MicroHUD.INSTANCE.mobCaps.getClientMobCap();
+                    DataTPS.INSTANCE.getClientTPS();
+                    DataMobCaps.INSTANCE.getClientMobCap();
                 } catch (NullPointerException ignored) {}
             }
         }
