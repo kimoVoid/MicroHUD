@@ -27,10 +27,10 @@ public class InfoMemory extends InfoLine {
         int mb = 1048576;
         String used = (runtime.totalMemory() - runtime.freeMemory()) / (long)mb + "MB / " + runtime.totalMemory() / (long)mb + "MB";
         String max = runtime.maxMemory() / (long)mb + "MB";
-        return String.format("%s / %s", used, max);
+        return String.format("%s | %s", used, max);
     }
 
     public static String getServerMemory() {
-        return String.format("%sMB / %sMB / %sMB", DataStorage.INSTANCE.serverMemUsed, DataStorage.INSTANCE.serverMemAllocated, DataStorage.INSTANCE.serverMemMax);
+        return String.format("%sMB / %sMB | %sMB", DataStorage.INSTANCE.serverMemUsed, DataStorage.INSTANCE.serverMemAllocated, DataStorage.INSTANCE.serverMemMax);
     }
 }
