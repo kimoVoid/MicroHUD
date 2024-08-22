@@ -45,6 +45,7 @@ public class Config {
     public boolean infoBiome = false;
     public boolean infoMemory = false;
     public boolean infoServerMemory = false;
+    public boolean infoBlockBreakSpeed = false;
 
     /* Info line order */
     public int lineOrderFps = 0;
@@ -64,6 +65,7 @@ public class Config {
     public int lineOrderBiome = 14;
     public int lineOrderMemory = 15;
     public int lineOrderServerMemory = 16;
+    public int lineOrderBlockBreakSpeed = 17;
 
     /* Player list toggles */
     public boolean playerListTps = false;
@@ -109,6 +111,7 @@ public class Config {
         this.infoBiome = config.getBoolean("infoBiome", "lines", false, "Display biome name");
         this.infoMemory = config.getBoolean("infoMemory", "lines", false, "Display used/allocated and max memory");
         this.infoServerMemory = config.getBoolean("infoServerMemory", "lines", false, "Display server used/allocated and max memory");
+        this.infoBlockBreakSpeed = config.getBoolean("infoBlockBreakSpeed", "lines", false, "Display your average mining speed");
 
         String orderMsg = "Choose this line's priority";
         this.lineOrderFps = config.getInt("lineOrderFps", "order", 0, 0, 100, orderMsg);
@@ -128,6 +131,7 @@ public class Config {
         this.lineOrderBiome = config.getInt("lineOrderBiome", "order", 14, 0, 100, orderMsg);
         this.lineOrderMemory = config.getInt("lineOrderMemory", "order", 15, 0, 100, orderMsg);
         this.lineOrderServerMemory = config.getInt("lineOrderServerMemory", "order", 16, 0, 100, orderMsg);
+        this.lineOrderBlockBreakSpeed = config.getInt("lineOrderBlockBreakSpeed", "order", 17, 0, 100, orderMsg);
 
         this.playerListTps = config.getBoolean("playerListTps", "playerlist", false, "Display TPS and MSPT in tab list");
         this.playerListMobcaps = config.getBoolean("playerListMobcaps", "playerlist", false, "Display mob caps in tab list");
@@ -161,6 +165,7 @@ public class Config {
         if (this.infoBiome) MicroHUD.INSTANCE.lines.add(new InfoBiome(this.lineOrderBiome));
         if (this.infoMemory) MicroHUD.INSTANCE.lines.add(new InfoMemory(this.lineOrderMemory, false));
         if (this.infoServerMemory) MicroHUD.INSTANCE.lines.add(new InfoMemory(this.lineOrderServerMemory, true));
+        if (this.infoBlockBreakSpeed) MicroHUD.INSTANCE.lines.add(new InfoBBS(this.lineOrderBlockBreakSpeed));
 
         /* Order the list based on custom order */
         MicroHUD.INSTANCE.lines.sort(Comparator.comparing(InfoLine::getOrder));

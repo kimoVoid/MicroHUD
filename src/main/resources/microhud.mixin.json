@@ -8,6 +8,7 @@
     "access.MinecraftAccessor",
     "access.RenderGlobalAccessor",
     "hud.GuiIngameMixin",
+    "info.bbs.PlayerControllerMPMixin",
     "networking.NetHandlerPlayClientMixin",
     "playerlist.GuiIngameMixin",
     "villagergui.GuiMerchantMixin"
