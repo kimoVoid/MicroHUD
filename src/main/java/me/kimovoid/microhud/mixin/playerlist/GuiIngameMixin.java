@@ -11,6 +11,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiIngame;
 import net.minecraft.client.network.NetHandlerPlayClient;
+import net.minecraft.scoreboard.ScoreObjective;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.client.GuiIngameForge;
 import org.spongepowered.asm.mixin.Mixin;
@@ -19,11 +20,12 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Mixin(GuiIngameForge.class)
+@Mixin(value = GuiIngameForge.class, priority = 900)
 public abstract class GuiIngameMixin extends GuiIngame {
 
     @Shadow private FontRenderer fontrenderer;
@@ -35,13 +37,14 @@ public abstract class GuiIngameMixin extends GuiIngame {
     @Inject(method = "renderPlayerList",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraftforge/client/GuiIngameForge;post(Lnet/minecraftforge/client/event/RenderGameOverlayEvent$ElementType;)V",
+                    target = "Lnet/minecraftforge/client/GuiIngameForge;drawRect(IIIII)V",
+                    ordinal = 0,
                     shift = At.Shift.BEFORE
             ),
-            remap = false
+            locals = LocalCapture.CAPTURE_FAILSOFT
     )
-    private void addPlayerListLines(int width, int height, CallbackInfo ci) {
-        NetHandlerPlayClient handler = mc.thePlayer.sendQueue;
+    private void addPlayerListLines(int width, int height, CallbackInfo ci, ScoreObjective scoreobjective, NetHandlerPlayClient handler, List players, int maxPlayers, int rows, int columns, int columnWidth, int left, byte border) {
+        MicroHUD.LOGGER.info("Rendering tab...");
         List<String> tabLines = microhud_getPlayerListLines();
 
         if (tabLines.isEmpty()) {
@@ -54,13 +57,13 @@ public abstract class GuiIngameMixin extends GuiIngame {
             if (strWidth > w) w = strWidth;
         }
 
-        int left = (width - w) / 2;
-        int tabSize = 12 + (Math.min(handler.currentServerMaxPlayers, 20) * 9);
-        drawRect(left - 1, tabSize - 1, left + w + 1, tabSize + 9 * tabLines.size(), Integer.MIN_VALUE);
+        int tabLeft = (width - w) / 2;
+        int tabSize = 12 + rows * 9;
+        drawRect(tabLeft - 1, tabSize - 1, tabLeft + w + 1, tabSize + 9 * tabLines.size(), Integer.MIN_VALUE);
 
         int shift = 0;
         for (String tabLine : tabLines) {
-            drawRect(left, tabSize + shift, left + w, tabSize + shift + 8, 553648127);
+            drawRect(tabLeft, tabSize + shift, tabLeft + w, tabSize + shift + 8, 553648127);
             fontrenderer.drawStringWithShadow(tabLine, width / 2 - fontrenderer.getStringWidth(tabLine) / 2, tabSize + shift, 16777215);
             shift += 9;
         }
