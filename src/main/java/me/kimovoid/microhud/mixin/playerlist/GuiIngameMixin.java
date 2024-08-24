@@ -44,7 +44,6 @@ public abstract class GuiIngameMixin extends GuiIngame {
             locals = LocalCapture.CAPTURE_FAILSOFT
     )
     private void addPlayerListLines(int width, int height, CallbackInfo ci, ScoreObjective scoreobjective, NetHandlerPlayClient handler, List players, int maxPlayers, int rows, int columns, int columnWidth, int left, byte border) {
-        MicroHUD.LOGGER.info("Rendering tab...");
         List<String> tabLines = microhud_getPlayerListLines();
 
         if (tabLines.isEmpty()) {
