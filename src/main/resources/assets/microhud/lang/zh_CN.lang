@@ -1,0 +1,4 @@
+microhud.config.lines=信息显示行
+microhud.config.render=渲染设置
+microhud.config.order=显示顺序
+microhud.config.playerlist=玩家列表显示行
